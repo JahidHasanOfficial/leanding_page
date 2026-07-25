@@ -63,7 +63,9 @@
             <div class="card-body">
                 <p class="mb-0">
                     {{ $order->shipping_address }}<br>
-                    {{ $order->shipping_city }}, {{ $order->shipping_postal_code }}<br>
+                    @if($order->shipping_city || $order->shipping_postal_code)
+                        {{ $order->shipping_city ?? '' }} {{ $order->shipping_postal_code ?? '' }}<br>
+                    @endif
                     {{ $order->shipping_country }}
                 </p>
             </div>

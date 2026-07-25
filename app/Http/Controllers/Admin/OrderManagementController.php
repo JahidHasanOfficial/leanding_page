@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateOrderStatusRequest;
 use App\Models\Order;
-use Illuminate\Http\Request;
 
 class OrderManagementController extends Controller
 {
+    /**
+     * Display a listing of orders in the admin dashboard.
+     */
     public function index()
     {
         $orders = Order::with('user', 'orderItems.product')
@@ -17,19 +20,21 @@ class OrderManagementController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
+    /**
+     * Display the details of a specific order.
+     */
     public function show(Order $order)
     {
         $order->load('user', 'orderItems.product');
         return view('admin.orders.show', compact('order'));
     }
 
-    public function updateStatus(Request $request, Order $order)
+    /**
+     * Update the status of an order.
+     */
+    public function updateStatus(UpdateOrderStatusRequest $request, Order $order)
     {
-        $request->validate([
-            'status' => 'required|in:pending,processing,completed,cancelled',
-        ]);
-
-        $order->update(['status' => $request->status]);
+        $order->update($request->validated());
 
         return back()->with('success', 'Order status updated successfully!');
     }

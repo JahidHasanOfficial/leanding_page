@@ -12,12 +12,16 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_number',
+        'customer_name',
+        'customer_phone',
+        'customer_email',
         'total_amount',
         'status',
         'shipping_address',
         'shipping_city',
         'shipping_postal_code',
         'shipping_country',
+        'note',
     ];
 
     protected $casts = [

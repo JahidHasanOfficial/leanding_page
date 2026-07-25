@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('order_number')->unique();
+            $table->string('customer_name');
+            $table->string('customer_phone');
+            $table->string('customer_email')->nullable();
             $table->decimal('total_amount', 10, 2);
             $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
             $table->string('shipping_address');
-            $table->string('shipping_city');
-            $table->string('shipping_postal_code');
-            $table->string('shipping_country');
+            $table->string('shipping_city')->nullable();
+            $table->string('shipping_postal_code')->nullable();
+            $table->string('shipping_country')->default('Bangladesh');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

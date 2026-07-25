@@ -20,8 +20,11 @@
                     </div>
                     <div class="col-md-6">
                         <strong>Customer:</strong><br>
-                        {{ $order->user->name }}<br>
-                        <small class="text-muted">{{ $order->user->email }}</small>
+                        {{ $order->customer_name }}<br>
+                        <small class="text-muted">Phone: {{ $order->customer_phone }}</small>
+                        @if($order->customer_email)
+                            <br><small class="text-muted">Email: {{ $order->customer_email }}</small>
+                        @endif
                     </div>
                 </div>
 
@@ -66,16 +69,23 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card mb-4">
             <div class="card-header">
                 <h5 class="mb-0">Shipping Address</h5>
             </div>
             <div class="card-body">
-                <p class="mb-0">
+                <p class="mb-2">
                     {{ $order->shipping_address }}<br>
-                    {{ $order->shipping_city }}, {{ $order->shipping_postal_code }}<br>
+                    @if($order->shipping_city || $order->shipping_postal_code)
+                        {{ $order->shipping_city ?? '' }}, {{ $order->shipping_postal_code ?? '' }}<br>
+                    @endif
                     {{ $order->shipping_country }}
                 </p>
+                @if($order->note)
+                    <hr>
+                    <strong>Customer Note:</strong>
+                    <p class="text-muted mb-0 italic">"{{ $order->note }}"</p>
+                @endif
             </div>
         </div>
     </div>

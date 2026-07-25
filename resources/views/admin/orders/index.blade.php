@@ -22,7 +22,7 @@
                     @forelse($orders as $order)
                         <tr>
                             <td>{{ $order->order_number }}</td>
-                            <td>{{ $order->user->name }}<br><small class="text-muted">{{ $order->user->email }}</small></td>
+                            <td>{{ $order->customer_name }}<br><small class="text-muted">{{ $order->customer_phone }}{{ $order->customer_email ? ' | ' . $order->customer_email : '' }}</small></td>
                             <td>{{ $order->orderItems->count() }} item(s)</td>
                             <td>${{ number_format($order->total_amount, 2) }}</td>
                             <td>

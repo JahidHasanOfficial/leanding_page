@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer(
+            ['layouts.frontend', 'layouts.app', 'frontend.partials.header', 'frontend.home.index', 'frontend.shop.index', 'frontend.product.show', 'frontend.cart.index', 'frontend.checkout.index'],
+            \App\View\Composers\CartComposer::class
+        );
+
+        view()->composer(
+            ['layouts.frontend', 'layouts.app', 'frontend.partials.header', 'frontend.home.index', 'frontend.shop.index', 'frontend.product.show', 'frontend.shop.partials.sidebar'],
+            \App\View\Composers\CategoryComposer::class
+        );
     }
 }

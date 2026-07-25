@@ -28,4 +28,20 @@ class ProductController extends Controller
     {
         return view('products.show', compact('product'));
     }
+
+    public function landing()
+    {
+        $products = Product::where('is_active', true)->get();
+        
+        // Find a smartwatch or headphones as featured, or default to the first active product
+        $featuredProduct = Product::where('is_active', true)
+            ->where('name', 'like', '%Smart Watch%')
+            ->first();
+
+        if (!$featuredProduct) {
+            $featuredProduct = Product::where('is_active', true)->first();
+        }
+
+        return view('landing', compact('products', 'featuredProduct'));
+    }
 }
